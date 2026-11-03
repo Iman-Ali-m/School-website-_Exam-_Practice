@@ -6,10 +6,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
 }
 
 require 'db.php';
-$user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT e.ExamID, e.ExamName, c.CourseName FROM Exams eJOIN Courses c ON e.CourseID = c.CourseIDJOIN Enrollments en ON c.CourseID = en.CourseIDWHERE en.StudentID = ? AND e.EndTime > NOW()");
+$user_id=$_SESSION['user_id'];
+$stmt=$conn->prepare("SELECT e.ExamID, e.ExamName, c.CourseName FROM Exams eJOIN Courses c ON e.CourseID = c.CourseIDJOIN Enrollments en ON c.CourseID = en.CourseIDWHERE en.StudentID = ? AND e.EndTime > NOW()");
 $stmt->execute([$user_id]);
-$exams = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$exams=$stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
