@@ -5,16 +5,16 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'professor') {
     exit();
 }
 require 'db.php';
-$exam_id = $_GET['exam_id'];
-$course_id = $_GET['course_id'];
-$stmt = $conn->prepare("SELECT DISTINCT u.UserID, u.FullName FROM StudentAnswers sa JOIN Users u ON sa.StudentID = u.UserID JOIN ExamQuestions eq ON sa.QuestionID = eq.QuestionID WHERE eq.ExamID = ?");
+$exam_id=$_GET['exam_id'];
+$course_id=$_GET['course_id'];
+$stmt=$conn->prepare("SELECT DISTINCT u.UserID, u.FullName FROM StudentAnswers sa JOIN Users u ON sa.StudentID = u.UserID JOIN ExamQuestions eq ON sa.QuestionID = eq.QuestionID WHERE eq.ExamID = ?");
 $stmt->execute([$exam_id]);
-$students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$answers = [];
+$students=$stmt->fetchAll(PDO::FETCH_ASSOC);
+$answers=[];
 if (isset($_GET['student_id'])) {
     $student_id = $_GET['student_id'];
-    $stmt = $conn->prepare("SELECT sa.AnswerID, eq.QuestionText, sa.AnswerText, sa.Grade FROM StudentAnswers saJOIN ExamQuestions eq ON sa.QuestionID = eq.QuestionIDWHERE sa.StudentID = ? AND eq.ExamID = ?");
-    $stmt->execute([$student_id, $exam_id]);
+    $stmt=$conn->prepare("SELECT sa.AnswerID, eq.QuestionText, sa.AnswerText, sa.Grade FROM StudentAnswers saJOIN ExamQuestions eq ON sa.QuestionID = eq.QuestionIDWHERE sa.StudentID = ? AND eq.ExamID = ?");
+    $stmt->execute([$student_id,$exam_id]);
     $answers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
