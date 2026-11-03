@@ -6,8 +6,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'professor') {
 }
 
 require 'db.php';
-$user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT asub.SubmissionID, asub.AssignmentName, c.CourseName, u.FullName, asub.SubmissionFile, asub.Grade FROM AssignmentSubmissions asubJOIN Courses c ON asub.CourseID = c.CourseIDJOIN Users u ON asub.StudentID = u.UserIDWHERE c.ProfessorID = ?");
+$user_id=$_SESSION['user_id'];
+$stmt=$conn->prepare("SELECT asub.SubmissionID, asub.AssignmentName, c.CourseName, u.FullName, asub.SubmissionFile, asub.Grade FROM AssignmentSubmissions asubJOIN Courses c ON asub.CourseID = c.CourseIDJOIN Users u ON asub.StudentID = u.UserIDWHERE c.ProfessorID = ?");
 $stmt->execute([$user_id]);
 $assignments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
